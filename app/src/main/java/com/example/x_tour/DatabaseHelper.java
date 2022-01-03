@@ -5,20 +5,29 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import androidx.annotation.Nullable;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DBNAME = "Login.db";
+    public static final String DBNAME = "X-Tour.db";
+    Context context;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DBNAME, null, 1);
+        this.context = context;
     }
 
     // create table on database
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE USERS(username TEXT primary key, password TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE USERS(userID INTEGER primary key AUTOINCREMENT, username TEXT, password TEXT, profilePic BLOB)");
     }
 
     // drop table if already exists
@@ -27,20 +36,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS USERS");
     }
 
-    public Boolean insertData(String username, String password){
+    public Boolean insertData(String username, String password) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
         contentValues.put("password", password);
-        long result = sqLiteDatabase.insert("USERS", null, contentValues);
-        if (result == 1)
-            return false;
 
+        // add image to content values
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.raw.default_userpic);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+        byte[] bytesImage = byteArrayOutputStream.toByteArray();
+        contentValues.put("profilePic", bytesImage);
+
+        long result = sqLiteDatabase.insert("USERS", null, contentValues);
+        if (result == -1)
+            return false;
         else
             return true;
     }
 
-    public Boolean checkUsername(String username){
+    public Boolean checkUsername(String username) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM USERS WHERE username = ?", new String[]{username});
         if (cursor.getCount() > 0)
@@ -49,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    public Boolean authenticateUser(String username, String password){
+    public Boolean authenticateUser(String username, String password) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM USERS WHERE username = ? AND password =?", new String[]{username, password});
         if (cursor.getCount() > 0)
@@ -57,4 +73,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
     }
+
+    public Integer getUserID(String username) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT userID FROM USERS WHERE username = ?", new String[]{username});
+        cursor.moveToFirst();
+
+        return cursor.getInt(0);
+    }
+
+    public String getUsername(String userID) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT username FROM USERS WHERE userID = ?", new String[]{userID});
+        cursor.moveToFirst();
+
+        return cursor.getString(0);
+    }
+
+    public Bitmap getProfilePic(String userID) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT profilePic FROM USERS WHERE userID = ?", new String[]{userID});
+        cursor.moveToFirst();
+        byte[] bytesImage = cursor.getBlob(0);
+        cursor.close();
+
+        Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+
+        return bitmapImage;
+    }
+
+    public Boolean updateProfilePic(Bitmap profilePicBitmap, String userID) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        // add image to content values
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        profilePicBitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+        byte[] bytesImage = byteArrayOutputStream.toByteArray();
+
+        contentValues.put("profilePic", bytesImage);
+
+        long result = sqLiteDatabase.update("USERS", contentValues, "userID = ?", new String[]{userID});
+        if (result == 1)
+            return true;
+        else
+            return false;
+    }
+
 }
