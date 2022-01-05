@@ -13,6 +13,8 @@ public class BookmarksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bookmarks, container, false);
+        View v = inflater.inflate(R.layout.fragment_bookmarks, container, false);
+
+        return v;
     }
 }

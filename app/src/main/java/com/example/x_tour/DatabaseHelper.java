@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DBNAME = "X-Tour.db";
@@ -28,15 +29,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE USERS(userID INTEGER primary key AUTOINCREMENT, username TEXT, password TEXT, profilePic BLOB)");
+        sqLiteDatabase.execSQL("CREATE TABLE BOOKMARKS(userID INTEGER, placeID TEXT)");
     }
 
     // drop table if already exists
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS USERS");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS BOOKMARKS");
     }
 
-    public Boolean insertData(String username, String password) {
+    public Boolean insertUserData(String username, String password) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
@@ -109,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // add image to content values
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        profilePicBitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+        profilePicBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] bytesImage = byteArrayOutputStream.toByteArray();
 
         contentValues.put("profilePic", bytesImage);
@@ -121,4 +124,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
+    public Boolean insertBookmarkData(String userID, String placeID) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("userID", userID);
+        contentValues.put("placeID", placeID);
+
+        long result = sqLiteDatabase.insert("BOOKMARKS", null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public ArrayList<String> getAllBookmarks(String userID) {
+        ArrayList<String> bookmarksList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT placeID FROM BOOKMARKS WHERE userID = ?", new String[]{userID});
+
+        while (cursor.moveToNext()) {
+            bookmarksList.add(cursor.getString(0));
+        }
+        cursor.close();
+
+        return bookmarksList;
+    }
+
+    public Boolean checkIfBookmarked(String userID, String placeID) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT EXISTS (SELECT 1 FROM BOOKMARKS WHERE userID = ? AND placeID = ?)", new String[]{userID, placeID});
+
+        cursor.moveToFirst();
+        if (cursor.getInt(0) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean deleteBookmarkData(String userID, String placeID) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        long result = sqLiteDatabase.delete("BOOKMARKS", "userID = ? AND placeID = ?", new String[]{userID, placeID});
+        if (result == 1)
+            return true;
+        else
+            return false;
+    }
 }

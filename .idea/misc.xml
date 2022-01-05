@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.2703125" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_bookmark_add_24.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_bookmarks_24.xml" value="0.2703125" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2703125" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_bookmark.xml" value="0.2703125" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/drawable/ic_home.xml" value="0.2703125" />
@@ -15,13 +18,16 @@
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
-        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/change_profilepic.xml" value="0.536" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/change_profilepic.xml" value="0.176" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/confirm_logout.xml" value="0.24547101449275363" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/fragment_bookmarks.xml" value="0.2536231884057971" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/fragment_editprofile.xml" value="0.24954710144927536" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/fragment_home.xml" value="0.2536231884057971" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/fragment_profile.xml" value="0.2536231884057971" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/places.xml" value="0.264" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/layout/places_details.xml" value="0.264" />
         <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/menu/bottom_navigation.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio Projects/XTour/app/src/main/res/menu/scrolling_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

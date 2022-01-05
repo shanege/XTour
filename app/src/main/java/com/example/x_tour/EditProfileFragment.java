@@ -44,7 +44,7 @@ public class EditProfileFragment extends Fragment {
     private ImageView btnCamera, btnGallery;
     private TextView tvUsername;
     private Button btnSave;
-    private DatabaseHelper dbHelper;
+    private DatabaseHelper UserDBHelper;
     private Uri cam_uri;
 
     @Nullable
@@ -57,14 +57,14 @@ public class EditProfileFragment extends Fragment {
         tvUsername = v.findViewById(R.id.tvUsername);
         btnChangePic = v.findViewById(R.id.btnChangePic);
         btnSave = v.findViewById(R.id.btnSave);
-        dbHelper = new DatabaseHelper(getActivity());
+        UserDBHelper = new DatabaseHelper(getActivity());
 
         // fetch profile picture from database
         String userID = String.valueOf(getActivity().getIntent().getExtras().getInt("userID"));
-        profilePic.setImageBitmap(dbHelper.getProfilePic(userID));
+        profilePic.setImageBitmap(UserDBHelper.getProfilePic(userID));
 
         // fetch username from database
-        String username = dbHelper.getUsername(userID);
+        String username = UserDBHelper.getUsername(userID);
         tvUsername.setText(username);
 
         btnChangePic.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +116,7 @@ public class EditProfileFragment extends Fragment {
                     public void onClick(View view) {
                         BitmapDrawable drawable = (BitmapDrawable) profilePic.getDrawable();
                         Bitmap profilePicBitmap = drawable.getBitmap();
-                        Boolean picUpdated = dbHelper.updateProfilePic(profilePicBitmap, userID);
+                        Boolean picUpdated = UserDBHelper.updateProfilePic(profilePicBitmap, userID);
                         if (picUpdated)
                             Toast.makeText(getActivity().getApplicationContext(), "Profile pic updated successfully", Toast.LENGTH_SHORT).show();
                         else

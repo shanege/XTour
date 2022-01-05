@@ -26,7 +26,7 @@ public class ProfileFragment extends Fragment {
     private Button btnEditProfile, btnLogout, btnYes, btnNo;
     private ShapeableImageView profilePic;
     private TextView tvUsername;
-    private DatabaseHelper dbHelper;
+    private DatabaseHelper UserDBHelper;
 
     @Nullable
     @Override
@@ -38,14 +38,14 @@ public class ProfileFragment extends Fragment {
         btnEditProfile = v.findViewById(R.id.btnEditProfile);
         btnLogout = v.findViewById(R.id.btnLogout);
         profilePic = v.findViewById(R.id.profilePic);
-        dbHelper = new DatabaseHelper(getActivity());
+        UserDBHelper = new DatabaseHelper(getActivity());
 
         // fetch profile picture from database
         String userID = String.valueOf(getActivity().getIntent().getExtras().getInt("userID"));
-        profilePic.setImageBitmap(dbHelper.getProfilePic(userID));
+        profilePic.setImageBitmap(UserDBHelper.getProfilePic(userID));
 
         // fetch username from database
-        String username = dbHelper.getUsername(userID);
+        String username = UserDBHelper.getUsername(userID);
         tvUsername.setText(username);
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
