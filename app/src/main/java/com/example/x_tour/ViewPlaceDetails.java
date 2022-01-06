@@ -5,15 +5,11 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -38,10 +34,8 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,9 +44,7 @@ import java.util.regex.Pattern;
 public class ViewPlaceDetails extends Fragment {
     private static final String apiKey = "AIzaSyCCRv9GRsmztETeNJI8iASrooelW2a1zrU";
     private Toolbar toolbar;
-    private AppBarLayout appBar;
     private FloatingActionButton btnBookmark;
-    private Menu menu;
     private ImageView ivPhoto;
     private TextView tvType, tvStatus, tvOpeningHours, tvIsOpen, tvTotalRatings, tvPrice, tvAddress, tvPhoneNum, tvWebsite;
     private RatingBar ratings;
@@ -65,7 +57,6 @@ public class ViewPlaceDetails extends Fragment {
 
         toolbar = v.findViewById(R.id.toolbar);
         btnBookmark = v.findViewById(R.id.btnBookmark);
-        appBar = v.findViewById(R.id.appBar);
         ivPhoto = v.findViewById(R.id.ivPhoto);
         tvType = v.findViewById(R.id.tvType);
         tvStatus = v.findViewById(R.id.tvStatus);
@@ -115,7 +106,8 @@ public class ViewPlaceDetails extends Fragment {
         placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
             Place place = response.getPlace();
 
-            toolbar.setTitle(place.getName()); // set Place name
+            // set Place name
+            toolbar.setTitle(place.getName());
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
             // set Place photo
@@ -163,7 +155,7 @@ public class ViewPlaceDetails extends Fragment {
             // set Place opening hours
             tvOpeningHours.setText(place.getOpeningHours().getWeekdayText().toString()
                     .replaceAll(",", "\n")
-                    .replace("[", "")
+                    .replace("[", " ")
                     .replace("]", ""));
 
             // set Place isOpen status
@@ -177,7 +169,7 @@ public class ViewPlaceDetails extends Fragment {
             }
 
             // set Place rating
-            ratings.setRating(Double.valueOf(place.getRating()).floatValue());
+            ratings.setRating(place.getRating().floatValue());
 
             // set Place rating count
             tvTotalRatings.setText(place.getUserRatingsTotal() + " ratings");
@@ -211,10 +203,8 @@ public class ViewPlaceDetails extends Fragment {
             final Uri placeWebsite = place.getWebsiteUri();
             if (placeWebsite == null)
                 tvWebsite.setText("No website available");
-            else {
+            else
                 tvWebsite.setText(placeWebsite.toString());
-                tvWebsite.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-            }
 
         }).addOnFailureListener((exception) -> {
             if (exception instanceof ApiException){

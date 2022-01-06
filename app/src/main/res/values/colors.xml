@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ultraviolet">#874EFF</color>
+    <color name="teal">#84DCC6</color>
     <color name="grey">#525252</color>
     <color name="bg">#FAF8FF</color>
 </resources>

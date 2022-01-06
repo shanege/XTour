@@ -43,7 +43,7 @@ public class EditProfileFragment extends Fragment {
     private FloatingActionButton btnChangePic;
     private ImageView btnCamera, btnGallery;
     private TextView tvUsername;
-    private Button btnSave;
+    private Button btnSave, btnDiscard;
     private DatabaseHelper UserDBHelper;
     private Uri cam_uri;
 
@@ -57,6 +57,7 @@ public class EditProfileFragment extends Fragment {
         tvUsername = v.findViewById(R.id.tvUsername);
         btnChangePic = v.findViewById(R.id.btnChangePic);
         btnSave = v.findViewById(R.id.btnSave);
+        btnDiscard = v.findViewById(R.id.btnDiscard);
         UserDBHelper = new DatabaseHelper(getActivity());
 
         // fetch profile picture from database
@@ -110,19 +111,28 @@ public class EditProfileFragment extends Fragment {
                         popupWindow.dismiss();
                     }
                 });
+            }
+        });
 
-                btnSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        BitmapDrawable drawable = (BitmapDrawable) profilePic.getDrawable();
-                        Bitmap profilePicBitmap = drawable.getBitmap();
-                        Boolean picUpdated = UserDBHelper.updateProfilePic(profilePicBitmap, userID);
-                        if (picUpdated)
-                            Toast.makeText(getActivity().getApplicationContext(), "Profile pic updated successfully", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getActivity().getApplicationContext(), "Profile pic update failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BitmapDrawable drawable = (BitmapDrawable) profilePic.getDrawable();
+                Bitmap profilePicBitmap = drawable.getBitmap();
+                Boolean picUpdated = UserDBHelper.updateProfilePic(profilePicBitmap, userID);
+                if (picUpdated) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Profile pic updated successfully", Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().popBackStackImmediate();
+                }
+                else
+                    Toast.makeText(getActivity().getApplicationContext(), "Profile pic update failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnDiscard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }
         });
 

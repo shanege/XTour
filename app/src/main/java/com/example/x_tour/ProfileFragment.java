@@ -35,8 +35,8 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         tvUsername = v.findViewById(R.id.tvUsername);
-        btnEditProfile = v.findViewById(R.id.btnEditProfile);
-        btnLogout = v.findViewById(R.id.btnLogout);
+        btnEditProfile = v.findViewById(R.id.btnSave);
+        btnLogout = v.findViewById(R.id.btnDiscard);
         profilePic = v.findViewById(R.id.profilePic);
         UserDBHelper = new DatabaseHelper(getActivity());
 
@@ -51,7 +51,12 @@ public class ProfileFragment extends Fragment {
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditProfileFragment()).commit();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new EditProfileFragment())
+                        .setReorderingAllowed(true)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

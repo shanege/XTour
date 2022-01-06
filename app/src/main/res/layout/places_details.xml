@@ -24,9 +24,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:scaleType="fitXY"
-                android:src="@mipmap/ic_launcher"
+                android:src="@color/grey"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/whitecast"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"/>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -46,91 +54,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
-            android:paddingTop="15dp">
+            android:paddingTop="25dp"
+            android:paddingBottom="50dp">
 
             <TextView
                 android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
                 android:drawableLeft="@drawable/ic_baseline_location_on_24"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="@font/opensans_regular"
                 android:text="Place type"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvType"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserrat"
-                android:text="Status"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/tvIsOpen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvStatus"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="50dp"
-                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
-                android:gravity="end"
-                android:text="OPEN"
-                android:textColor="#599b61"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/tvOpeningHours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvIsOpen"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserrat"
-                android:text="Opening hours"
-                android:textSize="15dp"
-                android:visibility="gone" />
-
-            <RelativeLayout
-                android:id="@+id/ratingLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvOpeningHours">
-
-                <RatingBar
-                    android:id="@+id/ratings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:isIndicator="true" />
-
-                <TextView
-                    android:id="@+id/tvTotalRatings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_toRightOf="@id/ratings"
-                    android:text="100 ratings"
-                    android:textSize="20dp" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ratingLayout"
-                android:layout_marginVertical="10dp"
-                android:text="Price level"
-                android:textSize="20dp" />
 
             <RelativeLayout
                 android:id="@+id/addressLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvPrice"
+                android:layout_below="@id/tvType"
                 android:layout_marginTop="25dp">
 
                 <ImageView
@@ -144,36 +87,183 @@
                     android:id="@+id/tvAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginHorizontal="5dp"
-                    android:layout_toRightOf="@+id/ivAddress"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_toEndOf="@+id/ivAddress"
+                    android:fontFamily="@font/opensans_italic"
                     android:text="Address"
-                    android:textSize="24dp" />
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
             </RelativeLayout>
+
+            <View
+                android:id="@+id/separator1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:layout_below="@id/addressLayout"
+                android:background="#DDDDDD"/>
+
+            <TextView
+                android:id="@+id/hoursTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator1"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Business hours"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/hoursTitle"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/black"
+                android:text="Status"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvIsOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/hoursTitle"
+                android:layout_toEndOf="@id/tvStatus"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="25dp"
+                android:gravity="end"
+                android:text="OPEN"
+                android:textColor="#599b61"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+            <TextView
+                android:id="@+id/tvOpeningHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvIsOpen"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/opensans_italic"
+                android:textColor="@color/black"
+                android:text="Opening hours"
+                android:textSize="16sp"
+                android:visibility="visible"/>
+
+            <View
+                android:id="@+id/separator2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:layout_below="@id/tvOpeningHours"
+                android:background="#DDDDDD"/>
+
+            <TextView
+                android:id="@+id/ratingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator2"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Ratings"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:id="@+id/ratingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/ratingTitle">
+
+                <TextView
+                    android:id="@+id/tvTotalRatings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="100 ratings"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <RatingBar
+                    android:id="@+id/ratings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/tvTotalRatings"
+                    android:isIndicator="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/priceRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingLayout"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Price range"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingLayout"
+                android:layout_marginVertical="10dp"
+                android:layout_toEndOf="@id/priceRange"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Price range"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/separator3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="25dp"
+                android:layout_below="@id/tvPrice"
+                android:background="#DDDDDD"/>
+
+            <TextView
+                android:id="@+id/moreInfoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator3"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Further information"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <RelativeLayout
                 android:id="@+id/phoneNumLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/addressLayout"
-                android:layout_marginTop="20dp">
+                android:layout_below="@id/moreInfoTitle"
+                android:layout_marginTop="25dp">
 
                 <ImageView
                     android:id="@+id/ivPhoneNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:src="@drawable/ic_baseline_phone_in_talk_24" />
 
                 <TextView
                     android:id="@+id/tvPhoneNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_toRightOf="@id/ivPhoneNum"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_toEndOf="@id/ivPhoneNum"
+                    android:fontFamily="@font/opensans_regular"
                     android:text="+60123456789"
-                    android:textSize="24dp" />
+                    android:textColor="@color/ultraviolet"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -187,19 +277,18 @@
                     android:id="@+id/ivWebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:src="@drawable/ic_baseline_computer_24" />
 
                 <TextView
                     android:id="@+id/tvWebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_toRightOf="@+id/ivWebsite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_toEndOf="@+id/ivWebsite"
+                    android:fontFamily="@font/opensans_italic"
                     android:text="Website url"
-                    android:textColor="#0000FF"
-                    android:textSize="24dp" />
+                    android:textColor="@color/ultraviolet"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
         </RelativeLayout>
