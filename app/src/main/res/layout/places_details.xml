@@ -148,10 +148,10 @@
                 android:layout_below="@id/tvIsOpen"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/opensans_italic"
-                android:textColor="@color/black"
                 android:text="Opening hours"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:visibility="visible"/>
+                android:visibility="gone" />
 
             <View
                 android:id="@+id/separator2"
