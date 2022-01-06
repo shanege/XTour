@@ -22,8 +22,6 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
 
         splashJingle = MediaPlayer.create(this, R.raw.splash_jingle);
-        splashJingle.setVolume(100, 100);
-        splashJingle.setLooping(false);
         splashJingle.start();
 
         splashScreen = findViewById(R.id.splashScreen);
