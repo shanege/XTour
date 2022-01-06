@@ -13,7 +13,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText etUsername, etPassword;
     private Button btnSignUp, btnLogin;
-    private DatabaseHelper UserDBHelper;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnLogin = findViewById(R.id.btnLogin);
-        UserDBHelper = new DatabaseHelper(this);
+        dbHelper = new DatabaseHelper(this);
 
         // signup function
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -37,13 +37,13 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                 else {
                     if (password.length() > 7) {
-                        Boolean checkUser = UserDBHelper.checkUsername(username);
+                        Boolean checkUser = dbHelper.checkUsername(username);
                         if (!checkUser) {
-                            Boolean insert = UserDBHelper.insertUserData(username, password);
+                            Boolean insert = dbHelper.insertUserData(username, password);
                             if (insert) {
                                 Toast.makeText(SignUpActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                int userID = UserDBHelper.getUserID(username);
+                                int userID = dbHelper.getUserID(username);
                                 intent.putExtra("userID", userID);
                                 startActivity(intent);
                                 finish();
