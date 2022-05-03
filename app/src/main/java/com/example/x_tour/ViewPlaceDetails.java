@@ -42,7 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ViewPlaceDetails extends Fragment {
-    private static final String apiKey = "AIzaSyCCRv9GRsmztETeNJI8iASrooelW2a1zrU";
+    private static final String apiKey = "placeyourapikeyhere";
     private Toolbar toolbar;
     private FloatingActionButton btnBookmark;
     private ImageView ivPhoto;
