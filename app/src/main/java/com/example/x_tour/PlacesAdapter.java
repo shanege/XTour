@@ -39,7 +39,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
 
     Context context;
     ArrayList<PlacesIDs> placesIDsArrayList;
-    private static final String apiKey = "AIzaSyCCRv9GRsmztETeNJI8iASrooelW2a1zrU";
+    private static final String apiKey = "placeyourapikeyhere";
 
     public PlacesAdapter(Context context, ArrayList<PlacesIDs> placesIDsArrayList) {
         this.context = context;
